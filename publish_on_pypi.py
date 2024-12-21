@@ -6,11 +6,22 @@ release and test modes.
 """
 
 import argparse
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 here = Path(__file__).parent.resolve()
+
+
+def cleanup():
+    """Clean the dist folder and build artifacts."""
+    dist_dir = here / "dist"
+    build_dir = here / "build"
+    if dist_dir.exists():
+        shutil.rmtree(dist_dir)
+    if build_dir.exists():
+        shutil.rmtree(build_dir)
 
 
 def run_command(command):
@@ -81,6 +92,7 @@ def main():
         repository_url = "testpypi"
 
     # Clean, build, and publish
+    cleanup()
     subprocess.run(["python", "-m", "build"], check=True)
 
     publish_to_pypi(repository_url)
