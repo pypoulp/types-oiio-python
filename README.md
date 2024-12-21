@@ -28,10 +28,21 @@ It is recommended to add this package to your project development dependencies.
 ## **Usage**
 
 Once installed, MyPy and your most IDEs will automatically use these stubs for type checking and code completion.
-| Autocomplete | Type Checking |
-|------------|-------------|
+| Autocomplete                    | Type Checking                    |
+| ------------------------------- | -------------------------------- |
 | ![first](img/auto-complete.jpg) | ![second](img/type-checking.jpg) |
-| (Example in VS Code) | (Example in VS Code) |
+| (Example in VS Code)            | (Example in VS Code)             |
+
+### Note for Pylint users
+
+Unfortunately Pylint does not (yet) support the use of stubs int the .pyi format.
+
+If you use Pylint, you will need to add the following to your `.pylintrc` file:
+
+```ini
+extension-pkg-whitelist=OpenImageIO,PyOpenColorIO
+```
+To avoid getting `E1101:no-member` errors when using compiled modules.
 
 
 ## **Version Compatibility**
