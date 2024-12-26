@@ -111,9 +111,9 @@ if __name__ == "__main__":
     # Clean the directory
     # Generate stubs
     print("Generating stubs...")
-    # generate_stubs("OpenImageIO")
+    generate_stubs("OpenImageIO")
     generate_stubs("PyOpenColorIO")
 
     # Fix stubs
-    # print("Fixing stubs...")
-    # fix_oiio_stubs()
+    print("Fixing stubs...")
+    fix_oiio_stubs()
