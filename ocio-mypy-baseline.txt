@@ -153,3 +153,4 @@ PyOpenColorIO.ViewingRules.ViewingRuleColorSpaceIterator
 PyOpenColorIO.ViewingRules.ViewingRuleEncodingIterator
 PyOpenColorIO.vector_of_uint8_t
 PyOpenColorIO.vector_of_uint8_t.__pybind11_module_local_v5_msvc_mscver1942__
+PyOpenColorIO.GpuShaderCreator.TextureDimensions

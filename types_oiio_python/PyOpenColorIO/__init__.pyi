@@ -210,7 +210,6 @@ VIEWTRANSFORM_DIR_FROM_REFERENCE: ViewTransformDirection
 VIEWTRANSFORM_DIR_TO_REFERENCE: ViewTransformDirection
 VIEW_DISPLAY_DEFINED: ViewType
 VIEW_SHARED: ViewType
-__status__: str
 __version__: str
 
 class Allocation:
