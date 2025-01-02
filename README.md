@@ -4,6 +4,8 @@
 
 This package provides type stubs for [oiio-python](https://github.com/pypoulp/oiio-python), enabling static type checking and better IDE support for OpenImageIO and OpenColorIO Python bindings.
 
+[![PyPI Downloads](https://static.pepy.tech/badge/types-oiio-python/month)](https://pepy.tech/projects/types-oiio-python)
+
 ---
 
 ## **Features**
