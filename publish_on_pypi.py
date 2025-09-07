@@ -9,9 +9,42 @@ import argparse
 import shutil
 import subprocess
 import sys
+import re
 from pathlib import Path
 
 here = Path(__file__).parent.resolve()
+
+# GitHub repository base URL for images
+GITHUB_RAW_URL = "https://raw.githubusercontent.com/pypoulp/types-oiio-python/main/"
+
+
+def replace_image_urls_for_pypi():
+    """
+    Replace local image URLs with GitHub URLs in README.md for PyPI.
+    Returns the original content for restoration.
+    """
+    readme_path = here / "README.md"
+    original_content = readme_path.read_text(encoding='utf-8')
+    
+    # Replace relative image paths with GitHub raw URLs
+    modified_content = re.sub(
+        r'!\[([^\]]*)\]\(img/([^)]+)\)',
+        rf'![\1]({GITHUB_RAW_URL}img/\2)',
+        original_content
+    )
+    
+    if modified_content != original_content:
+        readme_path.write_text(modified_content, encoding='utf-8')
+        print("✓ Replaced local image URLs with GitHub URLs in README.md")
+    
+    return original_content
+
+
+def restore_readme(original_content):
+    """Restore the original README.md content."""
+    readme_path = here / "README.md"
+    readme_path.write_text(original_content, encoding='utf-8')
+    print("✓ Restored original README.md")
 
 
 def cleanup():
@@ -91,11 +124,35 @@ def main():
     else:
         repository_url = "testpypi"
 
-    # Clean, build, and publish
-    cleanup()
-    subprocess.run(["python", "-m", "build"], check=True)
-
-    publish_to_pypi(repository_url)
+    # Store original README content before modifications
+    original_readme = None
+    
+    try:
+        # Clean build artifacts
+        cleanup()
+        
+        # Replace image URLs for PyPI
+        original_readme = replace_image_urls_for_pypi()
+        
+        # Build the package
+        subprocess.run(["python", "-m", "build"], check=True)
+        
+        # Publish to PyPI
+        publish_to_pypi(repository_url)
+        
+        # If we get here, publishing was successful
+        print("✓ Publishing completed successfully!")
+        
+    except KeyboardInterrupt:
+        print("\n✗ Publishing interrupted by user")
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n✗ Publishing failed: {e}")
+        sys.exit(1)
+    finally:
+        # Always restore the original README
+        if original_readme is not None:
+            restore_readme(original_readme)
 
 
 if __name__ == "__main__":
